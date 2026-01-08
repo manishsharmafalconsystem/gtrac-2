@@ -7,16 +7,20 @@ import {
   ClipboardList,
   AlertCircle,
   BarChart2,
+  FileText,
   Settings,
   LogOut,
   ChevronDown,
   ChevronUp,
+  File,
+  BookOpen,
+  CalendarCheck
 } from "lucide-react";
 import { assets } from "../assets/assets";
 
 const Sidebar = ({ isCollapsed }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
-  const navigate = useNavigate(); // Correctly call hook here
+  const navigate = useNavigate();
 
   const handleDropdown = (menuName) => {
     setOpenDropdown(openDropdown === menuName ? null : menuName);
@@ -29,15 +33,14 @@ const Sidebar = ({ isCollapsed }) => {
       icon: <Users />,
       subMenu: [
         { name: "All Drivers", path: "/drivers" },
-        { name: "Add Driver", path: "/drivers/add" },
       ],
     },
     {
       name: "Fleet",
       icon: <Truck />,
       subMenu: [
-        { name: "All Vehicles", path: "/fleet" },
-        { name: "Maintenance", path: "/fleet/maintenance" },
+        { name: "All Vehicles", path: "/vehicles" },
+        { name: "Maintenance", path: "/maintaince" },
       ],
     },
     {
@@ -45,11 +48,31 @@ const Sidebar = ({ isCollapsed }) => {
       icon: <ClipboardList />,
       subMenu: [
         { name: "All Trips", path: "/trips" },
-        { name: "Add Trip", path: "/trips/add" },
       ],
     },
-    { name: "Reports", icon: <BarChart2 />, path: "/reports" },
+    {
+      name: "Reports",
+      icon: <BarChart2 />,
+      subMenu: [
+        { name: "Performance", path: "/reports/performance" },
+        { name: "Fleet Summary", path: "/reports/summary" },
+      ],
+    },
     { name: "Alerts", icon: <AlertCircle />, path: "/alerts" },
+    {
+      name: "Schedules",
+      icon: <CalendarCheck />,
+      subMenu: [
+        { name: "Trip Schedule", path: "/schedules/trips" },
+      ],
+    },
+
+    {
+      name: "Documents Center",
+      icon: <FileText />,
+      path: "documents-center"
+    },
+
     { name: "Settings", icon: <Settings />, path: "/settings" },
   ];
 
@@ -143,10 +166,10 @@ const Sidebar = ({ isCollapsed }) => {
           className={`flex items-center gap-3 cursor-pointer hover:bg-gray-700 p-2 rounded transition-opacity duration-300 ${
             isCollapsed ? "justify-center" : ""
           }`}
-          onClick={() => navigate("/profile")}
+          onClick={() => navigate("/settings")}
         >
           <Users size={20} />
-          {!isCollapsed && <span>Profile</span>}
+          {!isCollapsed && <span>Account</span>}
         </div>
         <div
           className={`flex items-center gap-3 cursor-pointer hover:bg-gray-700 p-2 rounded mt-2 transition-opacity duration-300 ${
