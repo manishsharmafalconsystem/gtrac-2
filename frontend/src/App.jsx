@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
 import MainLayout from "./layout/MainLayout";
+import Dashboard from "./pages/Dashboard";
 import Alerts from "./pages/Alerts";
 import Drivers from "./pages/Drivers";
 import Fleet from "./pages/Fleet";
@@ -15,9 +15,12 @@ import Login from "./pages/Login";
 const App = () => {
   return (
     <Routes>
-      {/* Main Layout Wrapper */}
+      {/* Public Login Route */}
+      <Route path="/login" element={<Login />} />
+
+      {/* Main App Layout */}
       <Route path="/" element={<MainLayout />}>
-        <Route index element={<Dashboard />} /> {/* Default Dashboard page */}
+        <Route index element={<Dashboard />} />
         <Route path="alerts" element={<Alerts />} />
         <Route path="documents-center" element={<Documents />} />
         <Route path="drivers" element={<Drivers />} />
@@ -26,7 +29,6 @@ const App = () => {
         <Route path="reports" element={<Reports />} />
         <Route path="settings" element={<Settings />} />
         <Route path="trips" element={<Trips />} />
-        <Route path="/login" element={<Login />} />
       </Route>
     </Routes>
   );

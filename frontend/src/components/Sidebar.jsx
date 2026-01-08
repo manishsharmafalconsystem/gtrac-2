@@ -1,155 +1,153 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import {
-  AiOutlineDashboard,
-  AiOutlineBell,
-  AiOutlineUser,
-  AiOutlineCar,
-  AiOutlineFire,
-  AiOutlineFileText,
-  AiOutlineSetting,
-  AiOutlineSwapRight,
-  AiOutlineDown,
-  AiOutlineUp,
-} from "react-icons/ai";
-import { assets } from "../assets/assets";
+  Home,
+  Users,
+  Truck,
+  ClipboardList,
+  AlertCircle,
+  BarChart2,
+  Settings,
+  LogOut,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 
-const menuItems = [
-  { name: "Dashboard", path: "/", icon: <AiOutlineDashboard /> },
-  { name: "Alerts", path: "/alerts", icon: <AiOutlineBell /> },
-  {
-    name: "Drivers",
-    icon: <AiOutlineUser />,
-    submenu: [
-      { name: "All Drivers", path: "/drivers" },
-    ],
-  },
-  { name: "Fleet", path: "/fleet", icon: <AiOutlineCar /> },
-  {
-    name: "Fuel",
-    icon: <AiOutlineFire />,
-    submenu: [
-      { name: "Fuel Logs", path: "/fuel/logs" },
-      { name: "Add Fuel", path: "/fuel/add" },
-    ],
-  },
-  {
-    name: "Reports",
-    icon: <AiOutlineFileText />,
-    submenu: [
-      { name: "Trip Reports", path: "/reports/trips" },
-      { name: "Fuel Reports", path: "/reports/fuel" },
-    ],
-  },
-  {
-    name: "Trips",
-    icon: <AiOutlineSwapRight />,
-    submenu: [
-      { name: "All Trips", path: "/trips" },
-      { name: "Schedule Trip", path: "/trips/schedule" },
-    ],
-  },
-  { name: "Documents Center", path: "/documents-center", icon: <AiOutlineSetting /> },
-  { name: "Settings", path: "/settings", icon: <AiOutlineSetting /> },
-];
+const Sidebar = ({ isCollapsed }) => {
+  const [openDropdown, setOpenDropdown] = useState(null);
 
-const Sidebar = ({ isOpen }) => {
-  const location = useLocation();
-  const [openDropdowns, setOpenDropdowns] = useState({});
-
-  // Automatically open dropdown if current route is in submenu
-  useEffect(() => {
-    const newDropdowns = {};
-    menuItems.forEach((item) => {
-      if (item.submenu) {
-        newDropdowns[item.name] = item.submenu.some(sub => sub.path === location.pathname);
-      }
-    });
-    setOpenDropdowns(newDropdowns);
-  }, [location.pathname]);
-
-  const toggleDropdown = (name) => {
-    setOpenDropdowns(prev => ({ ...prev, [name]: !prev[name] }));
+  const handleDropdown = (menuName) => {
+    if (openDropdown === menuName) setOpenDropdown(null);
+    else setOpenDropdown(menuName);
   };
 
-  // Check if a parent menu should be active
-  const isParentActive = (submenu) => {
-    return submenu.some(sub => sub.path === location.pathname);
-  };
+  const menuItems = [
+    { name: "Dashboard", icon: <Home />, path: "/" },
+    {
+      name: "Drivers",
+      icon: <Users />,
+      subMenu: [
+        { name: "All Drivers", path: "/drivers" },
+        { name: "Add Driver", path: "/drivers/add" },
+      ],
+    },
+    {
+      name: "Fleet",
+      icon: <Truck />,
+      subMenu: [
+        { name: "All Vehicles", path: "/fleet" },
+        { name: "Maintenance", path: "/fleet/maintenance" },
+      ],
+    },
+    {
+      name: "Trips",
+      icon: <ClipboardList />,
+      subMenu: [
+        { name: "All Trips", path: "/trips" },
+        { name: "Add Trip", path: "/trips/add" },
+      ],
+    },
+    { name: "Alerts", icon: <AlertCircle />, path: "/alerts" },
+    { name: "Reports", icon: <BarChart2 />, path: "/reports" },
+    { name: "Settings", icon: <Settings />, path: "/settings" },
+  ];
 
   return (
-    <div className={`bg-white text-gray-800 h-screen shadow-lg transition-all duration-300 ${isOpen ? "w-64" : "w-20"}`}>
-      {/* Logo */}
-      <div className="flex items-center justify-center h-16 border-b border-gray-200 p-4">
-        <span className={`transition-all duration-300 ${!isOpen && "scale-0"}`}>
-          <img src={assets.logo} alt="logo" className="w-24 cursor-pointer" />
-        </span>
-      </div>
-
-      {/* Menu */}
-      <ul className="mt-4 flex flex-col gap-1">
-        {menuItems.map((item) => {
-          const hasSubmenu = item.submenu && item.submenu.length > 0;
-          const active = (item.path && location.pathname === item.path) || (hasSubmenu && isParentActive(item.submenu));
-
-          return (
-            <li key={item.name}>
-              <div>
-                {/* Main Link */}
-                {hasSubmenu ? (
+    <div
+      className={`flex flex-col justify-between bg-gray-900 text-white h-screen shadow-lg transition-all duration-300 ${
+        isCollapsed ? "w-20" : "w-64"
+      }`}
+    >
+      <div className="px-4 py-6">
+        <h1
+          className={`text-2xl font-bold mb-8 transition-opacity duration-300 ${
+            isCollapsed ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
+        >
+          FleetManager
+        </h1>
+        <nav>
+          {menuItems.map((item) => (
+            <div key={item.name} className="mb-1">
+              {item.subMenu ? (
+                <div>
                   <button
-                    onClick={() => toggleDropdown(item.name)}
-                    className={`flex items-center justify-between w-full gap-4 px-6 py-3 rounded-lg mx-2 transition-all duration-200 text-sm font-medium
-                      ${active ? "bg-blue-100 text-blue-700 shadow" : "hover:bg-gray-100 hover:text-blue-600"}`}
+                    className="flex items-center justify-between w-full p-2 hover:bg-gray-700 rounded cursor-pointer"
+                    onClick={() => handleDropdown(item.name)}
                   >
-                    <span className="flex items-center gap-4">
-                      <span className="text-lg">{item.icon}</span>
-                      <span className={`${!isOpen && "hidden"} transition-all duration-200`}>{item.name}</span>
-                    </span>
-                    {isOpen && <span>{openDropdowns[item.name] ? <AiOutlineUp /> : <AiOutlineDown />}</span>}
+                    <div className="flex items-center gap-3">
+                      {item.icon}
+                      <span
+                        className={`transition-opacity duration-300 ${
+                          isCollapsed ? "opacity-0 pointer-events-none" : "opacity-100"
+                        }`}
+                      >
+                        {item.name}
+                      </span>
+                    </div>
+                    {!isCollapsed &&
+                      (openDropdown === item.name ? <ChevronUp /> : <ChevronDown />)}
                   </button>
-                ) : (
-                  <Link
-                    to={item.path}
-                    className={`flex items-center gap-4 px-6 py-3 rounded-lg mx-2 text-sm font-medium transition-all duration-200
-                      ${location.pathname === item.path ? "bg-blue-100 text-blue-700 shadow" : "hover:bg-gray-100 hover:text-blue-600"}`}
-                  >
-                    <span className="text-lg">{item.icon}</span>
-                    {isOpen && <span>{item.name}</span>}
-                  </Link>
-                )}
-
-                {/* Submenu */}
-                {hasSubmenu && openDropdowns[item.name] && isOpen && (
-                  <ul className="ml-12 mt-1 flex flex-col gap-1">
-                    {item.submenu.map((sub) => (
-                      <li key={sub.name}>
-                        <Link
+                  {openDropdown === item.name && !isCollapsed && (
+                    <div className="ml-8 mt-1 flex flex-col gap-1 transition-all duration-300">
+                      {item.subMenu.map((sub) => (
+                        <NavLink
+                          key={sub.name}
                           to={sub.path}
-                          className={`block px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
-                            ${location.pathname === sub.path ? "bg-blue-50 text-blue-700" : "hover:bg-gray-100 hover:text-blue-600"}`}
+                          className={({ isActive }) =>
+                            `p-2 rounded hover:bg-gray-700 cursor-pointer ${
+                              isActive ? "bg-gray-700" : ""
+                            }`
+                          }
                         >
                           {sub.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+                        </NavLink>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <NavLink
+                  to={item.path || "#"}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 p-2 rounded hover:bg-gray-700 cursor-pointer ${
+                      isActive ? "bg-gray-700" : ""
+                    }`
+                  }
+                >
+                  {item.icon}
+                  <span
+                    className={`transition-opacity duration-300 ${
+                      isCollapsed ? "opacity-0 pointer-events-none" : "opacity-100"
+                    }`}
+                  >
+                    {item.name}
+                  </span>
+                </NavLink>
+              )}
+            </div>
+          ))}
+        </nav>
+      </div>
 
-      {/* Profile fixed at bottom */}
-      <div className="absolute bottom-0 w-full mb-4">
-        <Link
-          to="/profile"
-          className="flex items-center gap-4 px-6 py-3 rounded-lg mx-2 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200 text-sm font-medium"
+      {/* Bottom Profile Section */}
+      <div className="px-4 py-6 border-t border-gray-700">
+        <div
+          className={`flex items-center gap-3 cursor-pointer hover:bg-gray-700 p-2 rounded transition-opacity duration-300 ${
+            isCollapsed ? "justify-center" : ""
+          }`}
         >
-          <AiOutlineUser className="text-lg" />
-          <span className={`${!isOpen && "hidden"} transition-all duration-200`}>Profile</span>
-        </Link>
+          <Users size={20} />
+          {!isCollapsed && <span>Profile</span>}
+        </div>
+        <div
+          className={`flex items-center gap-3 cursor-pointer hover:bg-gray-700 p-2 rounded mt-2 transition-opacity duration-300 ${
+            isCollapsed ? "justify-center" : ""
+          }`}
+        >
+          <LogOut size={20} />
+          {!isCollapsed && <span>Logout</span>}
+        </div>
       </div>
     </div>
   );

@@ -5,13 +5,15 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 
 const MainLayout = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const toggleSidebar = () => {
+    setIsSidebarCollapsed(!isSidebarCollapsed);
+  };
 
   return (
     <div className="flex h-screen">
-      <Sidebar isOpen={sidebarOpen} />
+      <Sidebar isCollapsed={isSidebarCollapsed} />
       <div className="flex-1 flex flex-col">
         <Navbar toggleSidebar={toggleSidebar} />
         <main className="flex-1 p-6 overflow-auto">
