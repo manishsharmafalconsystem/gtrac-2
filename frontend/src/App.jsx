@@ -11,6 +11,7 @@ import Settings from "./pages/Settings";
 import Trips from "./pages/Trips";
 import Documents from "./pages/Documents";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="reports" element={<Reports />} />
         <Route path="settings" element={<Settings />} />
         <Route path="trips" element={<Trips />} />
+        <Route path="profile" element={<Profile />} />
       </Route>
     </Routes>
   );

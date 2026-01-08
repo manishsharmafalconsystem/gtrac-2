@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   Home,
   Users,
@@ -12,13 +12,14 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
+import { assets } from "../assets/assets";
 
 const Sidebar = ({ isCollapsed }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
+  const navigate = useNavigate(); // Correctly call hook here
 
   const handleDropdown = (menuName) => {
-    if (openDropdown === menuName) setOpenDropdown(null);
-    else setOpenDropdown(menuName);
+    setOpenDropdown(openDropdown === menuName ? null : menuName);
   };
 
   const menuItems = [
@@ -47,8 +48,8 @@ const Sidebar = ({ isCollapsed }) => {
         { name: "Add Trip", path: "/trips/add" },
       ],
     },
-    { name: "Alerts", icon: <AlertCircle />, path: "/alerts" },
     { name: "Reports", icon: <BarChart2 />, path: "/reports" },
+    { name: "Alerts", icon: <AlertCircle />, path: "/alerts" },
     { name: "Settings", icon: <Settings />, path: "/settings" },
   ];
 
@@ -58,19 +59,24 @@ const Sidebar = ({ isCollapsed }) => {
         isCollapsed ? "w-20" : "w-64"
       }`}
     >
+      {/* Top Section */}
       <div className="px-4 py-6">
+        {/* Logo */}
         <h1
-          className={`text-2xl font-bold mb-8 transition-opacity duration-300 ${
+          className={`mb-8 transition-opacity duration-300 flex items-center justify-center ${
             isCollapsed ? "opacity-0 pointer-events-none" : "opacity-100"
           }`}
         >
-          FleetManager
+          <img src={assets.logo} alt="logo" className="w-28 cursor-pointer" />
         </h1>
+
+        {/* Menu Items */}
         <nav>
           {menuItems.map((item) => (
             <div key={item.name} className="mb-1">
               {item.subMenu ? (
                 <div>
+                  {/* Menu with Submenu */}
                   <button
                     className="flex items-center justify-between w-full p-2 hover:bg-gray-700 rounded cursor-pointer"
                     onClick={() => handleDropdown(item.name)}
@@ -88,6 +94,7 @@ const Sidebar = ({ isCollapsed }) => {
                     {!isCollapsed &&
                       (openDropdown === item.name ? <ChevronUp /> : <ChevronDown />)}
                   </button>
+                  {/* Submenu */}
                   {openDropdown === item.name && !isCollapsed && (
                     <div className="ml-8 mt-1 flex flex-col gap-1 transition-all duration-300">
                       {item.subMenu.map((sub) => (
@@ -136,6 +143,7 @@ const Sidebar = ({ isCollapsed }) => {
           className={`flex items-center gap-3 cursor-pointer hover:bg-gray-700 p-2 rounded transition-opacity duration-300 ${
             isCollapsed ? "justify-center" : ""
           }`}
+          onClick={() => navigate("/profile")}
         >
           <Users size={20} />
           {!isCollapsed && <span>Profile</span>}

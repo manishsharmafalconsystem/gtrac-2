@@ -5,70 +5,71 @@ import {
   BarChart2,
   FileText,
   Search,
-  ChevronLeft,
+  Menu,
+  PanelsLeftBottom,
 } from "lucide-react";
 
 const Navbar = ({ toggleSidebar, isSidebarCollapsed }) => {
   return (
     <div className="bg-gray-50 border-b border-gray-200 shadow-md h-20 flex items-center justify-between px-6">
-      <div className="flex items-center space-x-6">
-        {/* Collapse/Expand Sidebar Button with rotation */}
+      {/* Left Section: Toggle + Title */}
+      <div className="flex items-center space-x-4">
+        {/* Collapse/Expand Sidebar Button */}
         <button
           onClick={toggleSidebar}
-          className="p-3 rounded-md hover:bg-gray-200 transition cursor-pointer"
+          className="p-2 rounded-md hover:bg-gray-200 transition flex items-center justify-center cursor-pointer"
+          title={isSidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
         >
-          <ChevronLeft
-            className={`h-7 w-7 text-gray-700 transition-transform duration-300 ${
-              isSidebarCollapsed ? "rotate-180" : "rotate-0"
-            }`}
-          />
+          {isSidebarCollapsed ? (
+            <Menu className="w-5 h-5 text-gray-700" />
+          ) : (
+            <PanelsLeftBottom className="w-5 h-5 text-gray-700" />
+          )}
         </button>
-
-        <h1 className="text-2xl font-semibold text-gray-800 cursor-pointer">
-          Dashboard
-        </h1>
       </div>
 
-      {/* Search Box */}
-      <div className="flex-1 mx-8">
+      {/* Center Section: Search */}
+      <div className="flex-1 mx-6">
         <div className="relative w-full">
           <input
             type="text"
             placeholder="Search Trips, Vehicles..."
-            className="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-700 text-sm"
+            className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 text-gray-700 text-sm shadow-sm"
           />
-          <Search className="w-6 h-6 absolute left-4 top-3 text-gray-400" />
+          <Search className="w-4 h-4 absolute left-3 top-2.5 text-gray-400" />
         </div>
       </div>
 
-      {/* Right Action Buttons */}
-      <div className="flex items-center space-x-6">
+      {/* Right Section: Action Buttons */}
+      <div className="flex items-center space-x-3">
         {/* Reports */}
-        <button className="flex items-center space-x-2 bg-white hover:bg-gray-100 border border-gray-300 px-4 py-2 rounded-lg shadow-sm text-gray-700 font-medium transition cursor-pointer">
-          <FileText className="w-5 h-5" />
-          <span>Reports</span>
+        <button className="flex items-center space-x-1 bg-[#003350] text-white px-3 py-1.5 rounded-lg text-sm font-medium transition shadow-sm cursor-pointer">
+          <FileText className="w-4 h-4" />
+          <span className="hidden sm:inline">Reports</span>
         </button>
 
         {/* Analytics */}
-        <button className="flex items-center space-x-2 bg-white hover:bg-gray-100 border border-gray-300 px-4 py-2 rounded-lg shadow-sm text-gray-700 font-medium transition cursor-pointer">
-          <BarChart2 className="w-5 h-5" />
-          <span>Analytics</span>
+        <button className="flex items-center space-x-1 bg-[#003350] text-white px-3 py-1.5 rounded-lg text-sm font-medium transition shadow-sm cursor-pointer">
+          <BarChart2 className="w-4 h-4" />
+          <span className="hidden sm:inline">Analytics</span>
         </button>
 
         {/* Notifications */}
         <div className="relative">
-          <button className="p-3 rounded-full hover:bg-gray-200 transition cursor-pointer">
-            <Bell className="w-7 h-7 text-gray-700" />
+          <button className="p-2 rounded-full hover:bg-gray-200 transition cursor-pointer">
+            <Bell className="w-5 h-5 text-gray-700" />
           </button>
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full font-semibold">
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full font-semibold">
             3
           </span>
         </div>
 
         {/* User Profile */}
-        <button className="flex items-center space-x-3 hover:bg-gray-200 px-4 py-2 rounded-lg transition cursor-pointer">
-          <User className="w-10 h-10 text-gray-700" />
-          <span className="text-gray-800 font-medium text-sm">John Doe</span>
+        <button className="flex items-center space-x-1 hover:bg-gray-200 px-2 py-3 rounded-lg transition cursor-pointer">
+          <User className="w-8 h-5 text-gray-700" />
+          <span className="text-gray-900 font-medium text-sm hidden sm:inline">
+               Fleet Manager           
+          </span>
         </button>
       </div>
     </div>
