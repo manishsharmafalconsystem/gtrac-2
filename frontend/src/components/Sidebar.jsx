@@ -12,6 +12,7 @@ import {
   LogOut,
   ChevronDown,
   ChevronUp,
+  MapPin,
 } from "lucide-react";
 import { assets } from "../assets/assets";
 
@@ -25,6 +26,7 @@ const Sidebar = ({ isCollapsed }) => {
 
   const menuItems = [
     { name: "Overview", icon: <Home />, path: "/" },
+    { name: "Live Tracking", icon: <MapPin />, path: "/live-tracking"},
     {
       name: "Drivers",
       icon: <Users />,

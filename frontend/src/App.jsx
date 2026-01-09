@@ -19,6 +19,7 @@ import Maintenance from "./pages/Maintenance";
 import FleetSummary from "./pages/FleetSummary";
 import Performance from "./pages/Performance";
 import FuelManagement from "./pages/FuelManagement";
+import LiveTracking from "./pages/LiveTracking";
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
         <Route path="profile" element={<Profile />} />
         <Route path="/vehicle/:id" element={<VehicleDetails />} />
         <Route path="fuel" element={<FuelManagement />} />
+        <Route path="live-tracking" element={<LiveTracking />} />
 
 
 
