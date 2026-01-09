@@ -62,7 +62,7 @@ const DocumentsCenter = () => {
 
   return (
     <div className="min-h-screen p-6 font-sans">
-      <h1 className="text-3xl font-bold mb-6">Document Center</h1>
+      <h1 className="text-3xl font-bold mb-6">Help & Supports</h1>
 
       {/* Tag Filters */}
       <div className="flex flex-wrap gap-2 mb-6">

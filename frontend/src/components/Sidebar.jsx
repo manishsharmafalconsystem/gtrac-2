@@ -12,9 +12,6 @@ import {
   LogOut,
   ChevronDown,
   ChevronUp,
-  File,
-  BookOpen,
-  CalendarCheck
 } from "lucide-react";
 import { assets } from "../assets/assets";
 
@@ -27,7 +24,7 @@ const Sidebar = ({ isCollapsed }) => {
   };
 
   const menuItems = [
-    { name: "Dashboard", icon: <Home />, path: "/" },
+    { name: "Overview", icon: <Home />, path: "/" },
     {
       name: "Drivers",
       icon: <Users />,
@@ -54,26 +51,19 @@ const Sidebar = ({ isCollapsed }) => {
       name: "Reports",
       icon: <BarChart2 />,
       subMenu: [
-        { name: "Performance", path: "/reports/performance" },
-        { name: "Fleet Summary", path: "/reports/summary" },
+        { name: "Performance", path: "/performance" },
+        { name: "Fleet Summary", path: "/fleet-summary" },
       ],
     },
     { name: "Alerts", icon: <AlertCircle />, path: "/alerts" },
-    {
-      name: "Schedules",
-      icon: <CalendarCheck />,
-      subMenu: [
-        { name: "Trip Schedule", path: "/schedules/trips" },
-      ],
-    },
 
     {
-      name: "Documents Center",
+      name: "Help & Supprots",
       icon: <FileText />,
       path: "documents-center"
     },
 
-    { name: "Settings", icon: <Settings />, path: "/settings" },
+    { name: "Settings", icon: <Settings />, path: "/none" },
   ];
 
   return (

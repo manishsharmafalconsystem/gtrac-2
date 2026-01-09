@@ -4,8 +4,8 @@ import MainLayout from "./layout/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import Alerts from "./pages/Alerts";
 import Drivers from "./pages/Drivers";
-import Fleet from "./pages/Fleet";
-import Fuel from "./pages/Fuel";
+import Fleet from "./pages/Performance";
+import Fuel from "./pages/FuelManagement";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import Trips from "./pages/Trips";
@@ -16,6 +16,9 @@ import DocumentsCenter from "./pages/DocumentsCenter";
 import Vehicles from "./pages/Vehicles";
 import PageNotFound from "./pages/PageNotFound";
 import Maintenance from "./pages/Maintenance";
+import FleetSummary from "./pages/FleetSummary";
+import Performance from "./pages/Performance";
+import FuelManagement from "./pages/FuelManagement";
 
 const App = () => {
   return (
@@ -36,15 +39,18 @@ const App = () => {
         <Route path="trips" element={<Trips />} />
         <Route path="profile" element={<Profile />} />
         <Route path="/vehicle/:id" element={<VehicleDetails />} />
+        <Route path="fuel" element={<FuelManagement />} />
 
 
 
         {/* fleet route */}
         <Route path="/vehicles" element={<Vehicles />} />
         <Route path="/maintaince" element={<Maintenance />} />
+        <Route path="/fleet-summary" element={<FleetSummary />} />
+        <Route path="/performance" element={<Performance /> } />
 
-        <Route path="*" element={<PageNotFound />} />
       </Route>
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };
